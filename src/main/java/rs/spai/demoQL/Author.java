@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "author")
-@Data //gere autot les geters et setters
+@Data 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
