@@ -1,5 +1,10 @@
 package rs.spai.demoQL;
 
-public class SearchPage {
+import lombok.*;
+import java.util.List;
 
+@Data @AllArgsConstructor
+public class SearchPage {
+    private List<Object> list;
+    private PageInfo pageInfo;
 }
