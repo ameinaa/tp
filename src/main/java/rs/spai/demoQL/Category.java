@@ -17,13 +17,13 @@ public class Category {
 
     private String categoryName;
 
-    // Parent category (relation auto-référentielle)
+    // Parent category 
     @ManyToOne
     @JoinColumn(name = "parent_category_id")
     private Category parentCategory;
 
     
-    // Sub categories (sous-catégories)
+    // Sub categories 
     @OneToMany(mappedBy = "parentCategory")
     private List<Category> subCategories;
 
