@@ -24,16 +24,16 @@ public class SecurityConfig {
             .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
 
             .authorizeHttpRequests(auth -> auth
-                // Autoriser H2 et GraphiQL sans login
-                .requestMatchers(
-                    "/h2/**",
-                    "/playground/**",
-                    "/graphiql/**"
-                ).permitAll()
+            	    .requestMatchers(
+            	        "/",
+            	        "/playground/**",
+            	        "/graphiql/**",
+            	        "/graphql/**",
+            	        "/h2/**"
+            	    ).permitAll()
+            	    .anyRequest().permitAll()
+            	)
 
-                // Le reste est public (GraphQL sécurisé par méthodes)
-                .anyRequest().permitAll()
-            )
             .httpBasic(Customizer.withDefaults());
 
         return http.build();
