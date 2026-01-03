@@ -4,16 +4,13 @@ import java.util.*;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.graphql.data.method.annotation.GraphQlExceptionHandler;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import graphql.GraphQLError;
 import graphql.GraphQLException;
 import graphql.GraphqlErrorBuilder;
-import graphql.ErrorType;
-import org.springframework.graphql.data.method.annotation.GraphQlExceptionHandler;
-
-
 
 @Controller
 public class MyController {
@@ -32,7 +29,9 @@ public class MyController {
         this.categoryRepo = cr;
     }
 
-    
+    // =========================
+    // UTIL METHODS
+    // =========================
 
     private PageInfo makePageInfo(int page, int size, int total) {
         int from = page * size;
@@ -58,7 +57,9 @@ public class MyController {
         return false;
     }
 
-    // ---------- PART 1 : QUERIES PUBLIQUES ----------
+    // =========================
+    // PART 1 : PUBLIC QUERIES
+    // =========================
 
     @QueryMapping
     public BookPage books(
@@ -88,12 +89,46 @@ public class MyController {
         return new BookPage(pageList, makePageInfo(p, s, total));
     }
 
+    // Books by author (ID OR NAME)
+    
     @QueryMapping
     public List<Book> booksByAuthor(@Argument int idAuthor) {
         return bookRepo.findAll().stream()
-            .filter(b -> b.getAuthor() != null && b.getAuthor().getIdAuthor() == idAuthor)
+            .filter(b -> b.getAuthor() != null &&
+                         b.getAuthor().getIdAuthor() == idAuthor)
             .toList();
     }
+
+    
+    @QueryMapping
+    public List<Book> booksByAuthorByName(@Argument String name) {
+        String lowerName = name.toLowerCase();
+
+        return bookRepo.findAll().stream()
+            .filter(b -> b.getAuthor() != null &&
+                         b.getAuthor().getName().toLowerCase().equals(lowerName))
+            .toList();
+    }
+
+   /* @QueryMapping
+    public List<Book> booksByAuthor(@Argument String author) {
+
+        // Case 1: ID
+        if (author.matches("\\d+")) {
+            int id = Integer.parseInt(author);
+            return bookRepo.findAll().stream()
+                .filter(b -> b.getAuthor() != null &&
+                             b.getAuthor().getIdAuthor() == id)
+                .toList();
+        }
+
+        // Case 2: Name
+        String lowerName = author.toLowerCase();
+        return bookRepo.findAll().stream()
+            .filter(b -> b.getAuthor() != null &&
+                         b.getAuthor().getName().toLowerCase().equals(lowerName))
+            .toList();
+    }*/
 
     @QueryMapping
     public SearchPage search(
@@ -135,8 +170,10 @@ public class MyController {
         }
 
         int total = results.size();
-        List<Object> pageList =
-            results.stream().skip(p * s).limit(s).toList();
+        List<Object> pageList = results.stream()
+            .skip(p * s)
+            .limit(s)
+            .toList();
 
         return new SearchPage(pageList, makePageInfo(p, s, total));
     }
@@ -156,7 +193,9 @@ public class MyController {
         return categoryRepo.findById(idC).orElse(null);
     }
 
-    // ---------- PART 2 : ADMIN ONLY ----------
+    // =========================
+    // PART 2 : ADMIN ONLY
+    // =========================
 
     @MutationMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -190,32 +229,22 @@ public class MyController {
         );
     }
 
+    @MutationMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public boolean deleteAuthor(@Argument int idA) {
+        if (!authorRepo.existsById(idA)) return false;
+        authorRepo.deleteById(idA);
+        return true;
+    }
 
-    
-    
+    // =========================
+    // GRAPHQL ERROR HANDLER
+    // =========================
+
     @GraphQlExceptionHandler
     public GraphQLError handleGraphQLException(GraphQLException ex) {
         return GraphqlErrorBuilder.newError()
             .message(ex.getMessage())
             .build();
     }
-
-
-    
-    
-    
-    
-    
-
-
-    @MutationMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public boolean deleteAuthor(@Argument int idA) {
-
-        if (!authorRepo.existsById(idA)) return false;
-        authorRepo.deleteById(idA);
-        return true;
-    }
-    
-    
 }

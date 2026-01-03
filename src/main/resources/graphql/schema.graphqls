@@ -60,7 +60,12 @@ enum SearchType {
   ALL
 }
 
+# ======================
+# UN SEUL TYPE QUERY
+# ======================
+
 type Query {
+
   books(
     page: Int = 0
     size: Int = 10
@@ -70,7 +75,11 @@ type Query {
     recursive: Boolean = false
   ): BookPage!
 
+  # Books by author (ID)
   booksByAuthor(idAuthor: Int!): [Book!]!
+
+  # Books by author (NAME)
+  booksByAuthorByName(name: String!): [Book!]!
 
   search(
     keyword: String!
