@@ -20,7 +20,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
 
-            // IMPORTANT POUR H2 (autoriser les iframes)
+           
             .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
 
             .authorizeHttpRequests(auth -> auth
