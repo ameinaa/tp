@@ -1,3 +1,10 @@
+### Tp Graph Ql :
+
+### Deplyement:
+[![Railway Logo](https://camo.githubusercontent.com/4976251d89450afd636b68329bdfa574e8ab8801835452f7d639bba48e46a5e6/68747470733a2f2f7261696c7761792e6170702f627574746f6e2e737667)](https://tp-production-0b3a.up.railway.app/playground?path=/graphql)
+
+### PART 1 – Public Queries
+
 ### List all books (default pagination)
 <img width="1440" height="607" alt="Screenshot 2026-01-03 at 5 43 48 PM" src="https://github.com/user-attachments/assets/4dcb3cd7-56de-4836-90f7-c6828ac9d22d" />
 
@@ -40,7 +47,7 @@
 
 <img width="1440" height="607" alt="Screenshot 2026-01-03 at 5 50 34 PM" src="https://github.com/user-attachments/assets/07ee2f5c-6627-4a0d-a1ec-4850fd89da77" />
 
-
+### PART 2 – By admin only :
 ## Add a new book : by admin 
 <img width="1440" height="607" alt="Screenshot 2026-01-03 at 5 52 13 PM" src="https://github.com/user-attachments/assets/95e724eb-b76c-4df0-a2e9-e2494141784d" />
 
