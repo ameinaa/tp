@@ -29,9 +29,7 @@ public class MyController {
         this.categoryRepo = cr;
     }
 
-    // =========================
-    // UTIL METHODS
-    // =========================
+    
 
     private PageInfo makePageInfo(int page, int size, int total) {
         int from = page * size;
@@ -58,7 +56,7 @@ public class MyController {
     }
 
     // =========================
-    // PART 1 : PUBLIC QUERIES
+    // PART 1 :  QUERIES
     // =========================
 
     @QueryMapping
@@ -89,7 +87,7 @@ public class MyController {
         return new BookPage(pageList, makePageInfo(p, s, total));
     }
 
-    // Books by author (ID OR NAME)
+    // 2: methodes:Books by author (ID OR NAME)
     
     @QueryMapping
     public List<Book> booksByAuthor(@Argument int idAuthor) {
@@ -130,6 +128,7 @@ public class MyController {
             .toList();
     }*/
 
+    // search pages
     @QueryMapping
     public SearchPage search(
         @Argument String keyword,
@@ -213,7 +212,7 @@ public class MyController {
             b.getAuthor().getIdAuthor() == a.getIdAuthor()
         );
 
-        if (exists) {
+        if (exists) {//if book est deja eexiste
             throw new GraphQLException("This book is already added");
         }
 
