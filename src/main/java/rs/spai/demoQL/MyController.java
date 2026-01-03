@@ -7,6 +7,14 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
+import graphql.GraphQLError;
+import graphql.GraphQLException;
+import graphql.GraphqlErrorBuilder;
+import graphql.ErrorType;
+import org.springframework.graphql.data.method.annotation.GraphQlExceptionHandler;
+
+
+
 @Controller
 public class MyController {
 
@@ -154,8 +162,21 @@ public class MyController {
     @PreAuthorize("hasRole('ADMIN')")
     public Book addBook(@Argument BookInput book) {
 
-        Author a = authorRepo.findById(book.getIdAuthor()).orElseThrow();
-        Category c = categoryRepo.findById(book.getIdC()).orElseThrow();
+        Author a = authorRepo.findById(book.getIdAuthor())
+            .orElseThrow(() -> new GraphQLException("Author not found"));
+
+        Category c = categoryRepo.findById(book.getIdC())
+            .orElseThrow(() -> new GraphQLException("Category not found"));
+
+        boolean exists = bookRepo.findAll().stream().anyMatch(b ->
+            b.getTitle().equalsIgnoreCase(book.getTitle()) &&
+            b.getAuthor() != null &&
+            b.getAuthor().getIdAuthor() == a.getIdAuthor()
+        );
+
+        if (exists) {
+            throw new GraphQLException("This book is already added");
+        }
 
         return bookRepo.save(
             Book.builder()
@@ -169,6 +190,24 @@ public class MyController {
         );
     }
 
+
+    
+    
+    @GraphQlExceptionHandler
+    public GraphQLError handleGraphQLException(GraphQLException ex) {
+        return GraphqlErrorBuilder.newError()
+            .message(ex.getMessage())
+            .build();
+    }
+
+
+    
+    
+    
+    
+    
+
+
     @MutationMapping
     @PreAuthorize("hasRole('ADMIN')")
     public boolean deleteAuthor(@Argument int idA) {
@@ -177,4 +216,6 @@ public class MyController {
         authorRepo.deleteById(idA);
         return true;
     }
+    
+    
 }
