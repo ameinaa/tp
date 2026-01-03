@@ -55,6 +55,7 @@
 ### Delete an author (ADMIN) :
 <img width="1440" height="607" alt="Screenshot 2026-01-03 at 5 52 48 PM" src="https://github.com/user-attachments/assets/ccb33671-eb52-4a8e-af73-7f17d376732c" />
 
+<img width="1384" height="653" alt="Screenshot 2026-01-03 at 8 27 57 PM" src="https://github.com/user-attachments/assets/88ea90de-25d4-40af-859a-7677e8854297" />
 
 
 
