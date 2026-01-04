@@ -48,12 +48,19 @@
 <img width="1440" height="607" alt="Screenshot 2026-01-03 at 5 50 34 PM" src="https://github.com/user-attachments/assets/07ee2f5c-6627-4a0d-a1ec-4850fd89da77" />
 
 ### PART 2 – By admin only :
-## Add a new book : by admin 
+### Add a new book : by admin 
 <img width="1440" height="607" alt="Screenshot 2026-01-03 at 5 52 13 PM" src="https://github.com/user-attachments/assets/95e724eb-b76c-4df0-a2e9-e2494141784d" />
+
+### Add the same book again (duplicate):
+<img width="1384" height="653" alt="Screenshot 2026-01-04 at 3 32 24 PM" src="https://github.com/user-attachments/assets/591cc1c1-109c-42d4-b5c7-713c8e534511" />
 
 
 ### Delete an author (ADMIN) :
 <img width="1440" height="607" alt="Screenshot 2026-01-03 at 5 52 48 PM" src="https://github.com/user-attachments/assets/ccb33671-eb52-4a8e-af73-7f17d376732c" />
+
+
+### Delete an author  does not existe(ADMIN) :
+
 
 <img width="1384" height="653" alt="Screenshot 2026-01-03 at 8 27 57 PM" src="https://github.com/user-attachments/assets/88ea90de-25d4-40af-859a-7677e8854297" />
 
